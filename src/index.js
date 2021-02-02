@@ -13,7 +13,7 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 Feather.loadFont();
 
-class DropDownPicker extends React.Component {
+class DropDownPickerSub extends React.Component {
     constructor(props) {
         super(props);
 
@@ -364,6 +364,24 @@ class DropDownPicker extends React.Component {
         return label + (len !== len2 ? '...' : '');
     }
 
+    getSubLabel(item , selected = false) {
+        let len;
+        let sublabel;
+
+        if (typeof item === 'object') {
+            len = item.sublabel.length;
+            sublabel = item.sublabel.substr(0, selected ? this.props.selectedSubLabelLength : this.props.sublabelLength);
+        } else if (item !== null && typeof item !== 'undefined') {
+            len = item.length;
+            sublabel = item.substr(0, selected ? this.props.selectedSubLabelLength : this.props.sublabelLength);
+        } else {
+            return item;
+        }
+        
+        let len2 = sublabel.length;
+        return sublabel + (len !== len2 ? '...' : '');
+    }
+
     render() {
         this.props.controller(this);
         const { multiple, disabled } = this.state.props;
@@ -501,17 +519,32 @@ class DropDownPicker extends React.Component {
                                         alignContent: 'center'
                                     }}>
                                         {item.icon && item.icon()}
-                                        <Text style={[
-                                            this.props.labelStyle, 
-                                                multiple ?
-                                                (this.isSelected(item) && this.props.activeLabelStyle) : (this.state.choice.value === item.value && this.props.activeLabelStyle)
-                                            , {
-                                            ...(item.icon && {
-                                                marginHorizontal: 5
-                                            })
-                                        }]} {...this.props.labelProps}>
-                                            {this.getLabel(item)}
-                                        </Text>
+                                        <View style={{
+                                            flexDirection: "column"
+                                        }}>
+                                            <Text style={[
+                                                this.props.labelStyle, 
+                                                    multiple ?
+                                                    (this.isSelected(item) && this.props.activeLabelStyle) : (this.state.choice.value === item.value && this.props.activeLabelStyle)
+                                                , {
+                                                ...(item.icon && {
+                                                    marginHorizontal: 5
+                                                })
+                                            }]} {...this.props.labelProps}>
+                                                {this.getLabel(item)}
+                                            </Text>
+                                            <Text style={[
+                                                this.props.subLabelStyle, 
+                                                    multiple ?
+                                                    (this.isSelected(item) && this.props.activeLabelStyle) : (this.state.choice.value === item.value && this.props.activeLabelStyle)
+                                                , {
+                                                ...(item.icon && {
+                                                    marginHorizontal: 5
+                                                })
+                                            }]} {...this.props.sublabelProps}>
+                                                {this.getSubLabel(item)}
+                                            </Text>
+                                        </View>
                                     </View>
 
                                     {
@@ -534,7 +567,7 @@ class DropDownPicker extends React.Component {
     }
 }
 
-DropDownPicker.defaultProps = {
+DropDownPickerSub.defaultProps = {
     placeholder: 'Select an item',
     dropDownMaxHeight: 150,
     style: {},
@@ -542,6 +575,7 @@ DropDownPicker.defaultProps = {
     containerStyle: {},
     itemStyle: {},
     labelStyle: {},
+    subLabelStyle: {},
     selectedLabelStyle: {},
     placeholderStyle: {},
     activeItemStyle: {},
@@ -569,7 +603,10 @@ DropDownPicker.defaultProps = {
     max: 10000000,
     selectedLabelLength: 1000,
     labelLength: 1000,
+    selectedSubLabelLength: 1000,
+    sublabelLength: 1000,
     labelProps: {},
+    sublabelProps: {},
     scrollViewProps: {},
     searchTextInputProps: {},
     containerProps: {},
@@ -639,4 +676,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DropDownPicker;
+export default DropDownPickerSub;

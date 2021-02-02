@@ -1,4 +1,4 @@
-declare module "react-native-dropdown-picker" {
+declare module "react-native-dropdownpicker-sub" {
   import React, { ComponentType } from "react";
   import {
     StyleProp,
@@ -10,7 +10,7 @@ declare module "react-native-dropdown-picker" {
     TextInputProps,
   } from "react-native";
 
-  export type DropDownPickerProps = {
+  export type DropDownPickerSubProps = {
     items: {
       label: any;
       value: any;
@@ -27,6 +27,7 @@ declare module "react-native-dropdown-picker" {
     containerStyle?: StyleProp<ViewStyle>;
     itemStyle?: StyleProp<ViewStyle>;
     labelStyle?: StyleProp<TextStyle>;
+    subLabelStyle?: StyleProp<TextStyle>;
     selectedLabelStyle?: StyleProp<TextStyle>;
     placeholderStyle?: StyleProp<TextStyle>;
     activeItemStyle?: StyleProp<ViewStyle>;
@@ -54,7 +55,10 @@ declare module "react-native-dropdown-picker" {
     onSearch?: (text: string) => void;
     selectedLabelLength?: number;
     labelLength?: number;
+    selectedSubLabelLength?: number;
+    sublabelLength?: number;
     labelProps?: TextProps;
+    sublabelProps?: TextProps;
     scrollViewProps?: ScrollViewProps;
     searchTextInputProps?: TextInputProps;
     containerProps?: ViewProps;
@@ -65,6 +69,6 @@ declare module "react-native-dropdown-picker" {
     onChangeList?: (items: any, callback: () => void) => void;
     renderSeperator?: () => JSX.Element;
   };
-  const DropDownPicker: ComponentType<DropDownPickerProps>;
-  export default DropDownPicker;
+  const DropDownPickerSub: ComponentType<DropDownPickerSubProps>;
+  export default DropDownPickerSub;
 }
